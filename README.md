@@ -7,7 +7,7 @@
 ## <p align="center">你需要深入了解一下对象</p>
 日常开发中，object接触的很多很多，{}，这个都不陌生，对象是一种复合值，它将很多值聚合在了一起，对象除了自有的属性，还会从一个原型（prototype）对象继承属性，对它的常见的用法有创建（create）、设置（set）、查找(query)、删除（delete）、检测（test）、枚举（enumerate）
 
-##1.创建对象
+## 1.创建对象
 ```
 1. var obj = {}  //对象直接量
 2. var obj1 = new Object() //调用new
