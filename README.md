@@ -34,7 +34,7 @@ var o2 = Object.create(null)//o2不继承任何属性和方法，以及toString(
 
 以上是创建一个名为o2的对象，传递null，o2对象不具备任何属性和方法
 
-##2.继承
+## 2.继承
 js的继承是基于原型链来继承的，原型链是js的比较难懂的一点，先说一些ECMASCRIPT的数据类型分为原始类型和引用类型：
 
         原始类型：有五种，undefined、null、Boolean、number和String;
@@ -80,3 +80,9 @@ fn1对象只有__proto__，没有prototype, fn1.__proto__指向了创建该对�
 <img width="300px" src="./img/WX20180318-060011@2x.png">
 
 以上fn1自身是没有selfName方法的，会沿着原型对象向上查询，如果原型对象中也没有selfName，但这个原型对象还有原型，那么继续向上查询，一直查询到Object.prototype.__proto__为止，
+假设给对象o.x赋值，如果o自身属性有x，那么只会改变自有属性，如果不存在这个属性，那么将给o新添加一个x属性。
+
+原型链走图可以看一下下面这张图：来自http://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/figure1.jpg
+<img src="./img/WX20180318-061408@2x.png">
+
+所有的可执行对象都是Object的子集，给Object.prototype添加的属性和方法，其它的对象都可以读取到，这个就是js的继承和原型链。
