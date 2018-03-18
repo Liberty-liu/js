@@ -86,3 +86,76 @@ fn1对象只有__proto__，没有prototype, fn1.__proto__指向了创建该对�
 <img src="./img/WX20180318-061408@2x.png">
 
 所有的可执行对象都是Object的子集，给Object.prototype添加的属性和方法，其它的对象都可以读取到，这个就是js的继承和原型链。
+
+## 3.删除属性
+
+有的时候会删除对象中的某一个属性，用delete运算符，可以删除对象自有的属性，不能删除继承的属性，如果一个对象引用另一个对象，调用delete删除宿主对象，这时的delete只是断开属性和宿主对象的联系。
+
+```
+var a = {p:{x:1}};
+var b = a.p;
+delete a.p; //true
+console.log(b); //{x:1}
+console.log(a); //{}
+```
+## 4.检测属性
+经常会一个对象是否存在某个属性，可以用到in、hasOwnProperty、propertyIsEnumerable；
+
+<h5>1.in运算符</h5>
+
+in运算符会检测属性是否存在对象上以及原型上；
+
+```
+var o = {x: 1};
+'x' in o;   //true 'x'是o的属性
+'y' in o;   //false 'y'不是o的属性
+'toString' in o  //true o继承toString属性
+```
+
+<h5>2.hasOwnProperty(param) </h5>
+
+该方法来检测给定的名字是否是对象的属性
+
+```
+var o = {x: 1};
+o.hasOwnProperty('x');   //true 'x'是o的属性
+o.hasOwnProperty('y');   //false 'y'不是o的属性
+o.hasOwnProperty('toString');  //false o继承toString属性,不是自有属性
+```
+
+<h5>3.propertyIsEnumerable(param) </h5>
+
+该方法来检测给定的名字是否是对象的自有属性且这个属性可枚举性为true它会返回true，继承来的属性为false；
+
+```
+var o = inherit({y:2});
+o.x = 1;
+o. propertyIsEnumerable('x'); //true x为可枚举的自有属性
+o. propertyIsEnumerable('y'); //false y是继承过来的
+Object.prototype. propertyIsEnumerable('toString'); // false 不可枚举
+```
+
+## 5.枚举属性
+经常遍历对象的属性，用到for/in、Object.keys()、Object.getOwnPropertyNames()，for/in这个方法会枚举出所有可枚举的属性和继承的属性，如果想要得到自身的属性，需要做一些处理。
+Object.keys()返回一个数组，内容是对象可枚举属性的自有属性。
+Object.getOwnPropertyNames()和Object.keys()一样都是返回数组，但它返回的是所有自有属性，不仅仅是可枚举的。
+
+
+## 6.getter和setter
+
+```
+var o = {
+        x: 1,
+        get r(){
+            return this.x+1;
+        },
+        set l(param){
+            this.x += param;
+        }
+    };
+    console.log(o.x); //1
+    console.log(o.r); //2
+    o.l = 20; //进行赋值
+    console.log(o.x); //21
+    console.log(o.r); //22
+```
