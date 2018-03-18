@@ -159,3 +159,56 @@ var o = {
     console.log(o.x); //21
     console.log(o.r); //22
 ```
+
+## 7.属性的特征
+对象除了包含属性名和属性值以外，还有一些标识它们是否可写(writable)、可枚举(enumerable)、可配置性(configurable)。
+Object.getOwnPropertyDescriptor(obj, param)获得某个对象的属性的属性描述符
+
+```
+// 返回{configurable:true,enumerable:true,writable:true,value:1}
+Object.getOwnPropertyDescriptor({x:1}, 'x')
+```
+
+Object.defineProperty(obj, param, config) 设置属性的特性
+
+```
+var o = {};
+Object.defineProperty(o, 'x', {
+	value: 1,
+	writable: true,
+	enumerable: false,
+	configurable: true
+})
+console.log(o.x)   //1
+console.log(Object.keys(o))  //[]  x存在，但不可枚举
+
+
+Object.defineProperty(o, 'x', {
+	writable: false  //变为只读
+})
+o.x = 20;
+console.log(o.x) //1  不可写
+
+
+Object.defineProperty(o, 'x', {value: 20});
+console.log(o.x)  //20   这里为20是属性为可配置的，如果把configurable:false就是不可配置的
+```
+
+## 8.序列化对象
+将对象转成字符串，再将字符串转成对象，一般可以用作对象深拷贝
+
+```
+var o = {
+        key1: 1,
+        key2: [1, 2, 3],
+        key3: {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+    }
+var s = JSON.stringify(o)  //'{"key1":1,"key2":[1,2,3],"key3":{"a":1,"b":2,"c":3}}'
+
+var p = JSON.parse(s) // p是o的深拷贝
+
+```
